@@ -1,0 +1,47 @@
+enable
+configure terminal
+hostname r1
+no aaa new-model
+no ip domain lookup
+ipv6 unicast-routing
+interface Loopback0
+ no shutdown
+ ip address 100.255.254.1 255.255.255.255
+ ip ospf 1 area 0
+exit
+interface Ethernet0/0
+ no shutdown
+ ip address 100.0.12.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip
+exit
+interface Ethernet0/1
+ no shutdown
+ ip address 100.0.13.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip
+exit
+interface Ethernet0/2
+ no shutdown
+ ip address 100.0.15.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip
+exit
+router ospf 1
+exit
+no ip http server
+no ip http secure-server
+mpls ldp router-id Loopback0 force
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

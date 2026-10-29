@@ -1,0 +1,123 @@
+config
+system
+ host-name               vEdge41-Real
+ system-ip               10.4.255.41
+ site-id                 4
+ admin-tech-on-failure
+ no route-consistency-check
+ organization-name       CCIE-EI-LAB
+ vbond 10.2.251.2
+ aaa
+  auth-order local radius tacacs
+  usergroup basic
+   task system read write
+   task interface read write
+  exit
+  usergroup netadmin
+  exit
+  usergroup operator
+   task system read
+   task interface read
+   task policy read
+   task routing read
+   task security read
+  exit
+  usergroup tenantadmin
+  exit
+  user admin
+   password <对应实验密钥>
+  exit
+ exit
+ logging
+  disk
+   enable
+  exit
+ exit
+exit
+omp
+ no shutdown
+ graceful-restart
+ advertise connected
+ advertise static
+exit
+security
+ ipsec
+  authentication-type ah-sha1-hmac sha1-hmac
+ exit
+exit
+vpn 0
+ interface ge0/1
+  ip address 101.40.0.2/30
+  tunnel-interface
+   encapsulation ipsec
+   color biz-internet
+   allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+  exit
+  no shutdown
+ exit
+ ip route 0.0.0.0/0 101.40.0.1
+exit
+vpn 198
+ name IoT
+exit
+vpn 199
+ name Guest
+ interface ge0/2
+  ip address 10.4.199.1/24
+  dhcp-helper 10.2.123.1
+  no shutdown
+ exit
+exit
+vpn 200
+ name Employees
+ interface ge0/0
+  ip address 10.4.200.1/24
+  no shutdown
+ exit
+exit
+vpn 512
+ interface eth0
+  ip dhcp-client
+  no shutdown
+ exit
+exit
+vpn 999
+ name SDA-Underlay
+ router
+  ospf
+   router-id 10.4.255.41
+   timers spf 200 1000 10000
+   redistribute omp route-policy G5-No-Feedback
+  exit
+ exit
+exit
+policy
+ route-policy G5-No-Feedback
+  sequence 10
+   match
+    omp-tag 198
+   exit
+   action reject
+   exit
+  exit
+  sequence 20
+   match
+    omp-tag 200
+   exit
+   action reject
+   exit
+  exit
+  default-action accept
+ exit
+exit
+commit and-quit

@@ -1,0 +1,62 @@
+config
+system
+ host-name             vManage-Real
+ system-ip             10.2.255.223
+ site-id               2
+ admin-tech-on-failure
+ sp-organization-name  CCIE-EI-LAB
+ organization-name     CCIE-EI-LAB
+ vbond 10.2.251.2
+ aaa
+  auth-order local radius tacacs
+  usergroup basic
+   task system read write
+   task interface read write
+  exit
+  usergroup netadmin
+  exit
+  usergroup operator
+   task system read
+   task interface read
+   task policy read
+   task routing read
+   task security read
+  exit
+  usergroup tenantadmin
+  exit
+  user admin
+   password <对应实验密钥>
+  exit
+ exit
+ logging
+  disk
+   enable
+  exit
+ exit
+exit
+vpn 0
+ interface eth0
+  ip address 10.2.253.2/24
+  ipv6 dhcp-client
+  tunnel-interface
+   allow-service all
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service stun
+   allow-service https
+  exit
+  no shutdown
+ exit
+ ip route 0.0.0.0/0 10.2.253.1
+exit
+vpn 512
+ interface eth1
+  ip dhcp-client
+  no shutdown
+ exit
+exit
+commit and-quit

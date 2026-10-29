@@ -1,0 +1,16 @@
+{
+  "migration": [
+    {
+      "site": "dc",
+      "count": 3,
+      "sha256": "b7569e248fca528bf6206b7f3452e1b6b1fa6185a789bb24e51bc38c3b5fbb84"
+    },
+    {
+      "site": "cloud",
+      "count": 3,
+      "sha256": "b7569e248fca528bf6206b7f3452e1b6b1fa6185a789bb24e51bc38c3b5fbb84"
+    }
+  ],
+  "entrypoint": "unchanged https://10.2.100.20:8443/api/orders",
+  "backend": "cloud"
+}

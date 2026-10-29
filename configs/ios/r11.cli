@@ -1,0 +1,112 @@
+enable
+configure terminal
+hostname r11
+no aaa new-model
+clock timezone EET 2 0
+no ip domain lookup
+ipv6 unicast-routing
+no cdp run
+interface Loopback0
+ no shutdown
+ ip address 10.1.255.11 255.255.255.255
+ ip ospf 1 area 0
+ ipv6 address 2001:DB8:1:255::11/128
+ ipv6 enable
+exit
+interface Ethernet0/0
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 100.3.11.2 255.255.255.252
+ ipv6 address FE80::11 link-local
+ ipv6 address 2001:2710:311::2/64
+exit
+interface Ethernet0/1
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.1.99.1 255.255.255.252
+ ip ospf 1 area 0
+ ipv6 address FE80::11 link-local
+exit
+interface Ethernet0/2
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.1.13.1 255.255.255.252
+ ip ospf 1 area 0
+ ipv6 address FE80::11 link-local
+exit
+interface Ethernet0/3
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.1.10.1 255.255.255.252
+ ip ospf 1 area 0
+ ipv6 address FE80::11 link-local
+exit
+router eigrp ccie
+ address-family ipv6 unicast autonomous-system 65001
+  af-interface default
+   shutdown
+   passive-interface
+   exit-af-interface
+  af-interface Ethernet0/1
+   no shutdown
+   no passive-interface
+   exit-af-interface
+  af-interface Ethernet0/2
+   no shutdown
+   no passive-interface
+   exit-af-interface
+  af-interface Ethernet0/3
+   no shutdown
+   no passive-interface
+   exit-af-interface
+  af-interface Loopback0
+   no shutdown
+   exit-af-interface
+  topology base
+   redistribute bgp 65001 metric 100000 100 255 1 1500
+   exit-af-topology
+  exit-address-family
+exit
+router ospf 1
+ redistribute bgp 65001 subnets tag 150
+exit
+router bgp 65001
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 100.3.11.1 remote-as 10000
+ address-family ipv4
+  redistribute ospf 1 match external 1 external 2 route-map TAG
+  neighbor 100.3.11.1 activate
+  neighbor 100.3.11.1 filter-list 20 in
+  distance bgp 115 200 200
+  exit-address-family
+ address-family ipv6
+  redistribute eigrp 65001
+  neighbor 100.3.11.1 activate
+  neighbor 100.3.11.1 route-map NH6 in
+  exit-address-family
+exit
+ip as-path access-list 20 deny _65002_
+ip as-path access-list 20 permit .*
+no ip http server
+no ip http secure-server
+route-map NH6 permit 10
+ set ipv6 next-hop 2001:2710:311::1
+exit
+route-map TAG deny 10
+ match tag 150
+exit
+route-map TAG permit 20
+exit
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+exit
+line vty 0 4
+ privilege level 15
+ no login
+ transport input all
+exit
+end
+write memory

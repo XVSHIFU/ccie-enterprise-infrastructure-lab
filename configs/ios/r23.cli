@@ -1,0 +1,101 @@
+enable
+configure terminal
+hostname r23
+vrf definition Guest
+ rd 65002:199
+ address-family ipv4
+  exit-address-family
+exit
+no aaa new-model
+clock timezone EET 2 0
+ip dhcp use vrf remote
+ip dhcp excluded-address vrf Guest 10.4.199.1 10.4.199.100
+ip dhcp excluded-address vrf Guest 10.5.199.1 10.5.199.100
+ip dhcp pool br1_guest
+ vrf Guest
+ network 10.4.199.0 255.255.255.0
+ default-router 10.4.199.1
+exit
+ip dhcp pool br2_guest
+ vrf Guest
+ network 10.5.199.0 255.255.255.0
+ default-router 10.5.199.1
+exit
+no ip domain lookup
+no cdp run
+interface Loopback0
+ no shutdown
+ ip address 10.2.255.23 255.255.255.255
+ ip ospf 1 area 0
+exit
+interface Loopback1
+ no shutdown
+ vrf forwarding Guest
+ ip address 10.2.255.211 255.255.255.255
+exit
+interface Ethernet0/0
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 200.99.23.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+exit
+interface Ethernet0/1
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.115.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+exit
+interface Ethernet0/2
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.215.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+exit
+interface Ethernet0/3
+ no shutdown
+ description https://ccielabcenter.com
+ vrf forwarding Guest
+ ip address 10.2.123.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+exit
+router ospf 1
+ prefix-suppression
+ default-information originate
+exit
+router bgp 65002
+ bgp log-neighbor-changes
+ neighbor 200.99.23.1 remote-as 19999
+ address-family ipv4 vrf Guest
+  network 0.0.0.0
+  network 10.2.255.211 mask 255.255.255.255
+  neighbor 10.2.123.2 remote-as 65002
+  neighbor 10.2.123.2 activate
+  exit-address-family
+exit
+no ip http server
+no ip http secure-server
+ip nat inside source list NAT interface Ethernet0/0 overload
+ip nat inside source list NAT interface Ethernet0/0 vrf Guest overload
+ip route vrf Guest 0.0.0.0 0.0.0.0 200.99.23.1 global
+ip access-list standard NAT
+ permit 10.0.0.0 0.255.255.255
+exit
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+exit
+line vty 0 4
+ privilege level 15
+ no login
+ transport input all
+exit
+end
+write memory

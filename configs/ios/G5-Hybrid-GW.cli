@@ -1,0 +1,70 @@
+enable
+configure terminal
+hostname G5-Hybrid-GW
+no aaa new-model
+no ip domain lookup
+track 41 ip sla 41 reachability
+exit
+track 61 ip sla 61 reachability
+exit
+interface Ethernet0/0
+ no shutdown
+ ip address 10.4.210.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ ip tcp adjust-mss 1300
+exit
+interface Ethernet0/1
+ no shutdown
+ ip address 10.4.200.254 255.255.255.0
+ ip nat outside
+ ip virtual-reassembly in
+exit
+interface Ethernet0/2
+ no shutdown
+ ip address 10.6.100.254 255.255.255.0
+ ip nat outside
+ ip virtual-reassembly in
+exit
+no ip http server
+no ip http secure-server
+ip nat inside source route-map VIA-DMVPN interface Ethernet0/2 overload
+ip nat inside source route-map VIA-SDWAN interface Ethernet0/1 overload
+ip route 0.0.0.0 0.0.0.0 10.4.200.1 track 41
+ip route 10.3.101.0 255.255.255.0 10.4.200.1 200 track 41
+ip route 0.0.0.0 0.0.0.0 10.6.100.1 200 track 61
+ip route 10.3.101.0 255.255.255.0 10.6.100.1 track 61
+ip route 10.2.255.211 255.255.255.255 10.4.200.1
+ip route 10.200.0.1 255.255.255.255 10.6.100.1
+ip access-list standard HYBRID-USERS
+ permit 10.4.210.0 0.0.0.255
+exit
+ip sla 41
+ icmp-echo 10.2.255.211 source-interface Ethernet0/1
+ frequency 5
+exit
+ip sla schedule 41 life forever start-time now
+ip sla 61
+ icmp-echo 10.200.0.1 source-interface Ethernet0/2
+ frequency 5
+exit
+ip sla schedule 61 life forever start-time now
+route-map VIA-DMVPN permit 10
+ match ip address HYBRID-USERS
+ match interface Ethernet0/2
+exit
+route-map VIA-SDWAN permit 10
+ match ip address HYBRID-USERS
+ match interface Ethernet0/1
+exit
+line con 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory
+show track
+show ip route static

@@ -1,0 +1,98 @@
+enable
+configure terminal
+hostname r12
+no aaa new-model
+clock timezone EET 2 0
+no ip domain lookup
+ipv6 unicast-routing
+no cdp run
+interface Loopback0
+ no shutdown
+ ip address 10.1.255.12 255.255.255.255
+ ip ospf 1 area 0
+ ipv6 address 2001:DB8:1:255::12/128
+exit
+interface Ethernet0/0
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 200.99.12.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+exit
+interface Ethernet0/1
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.1.99.2 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+ ipv6 address FE80::12 link-local
+exit
+interface Ethernet0/2
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.1.12.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+ ipv6 address FE80::12 link-local
+exit
+interface Ethernet0/3
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.1.11.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+ ipv6 address FE80::12 link-local
+exit
+router eigrp ccie
+ address-family ipv6 unicast autonomous-system 65001
+  af-interface default
+   shutdown
+   passive-interface
+   exit-af-interface
+  af-interface Ethernet0/1
+   no shutdown
+   no passive-interface
+   exit-af-interface
+  af-interface Ethernet0/2
+   no shutdown
+   no passive-interface
+   exit-af-interface
+  af-interface Ethernet0/3
+   no shutdown
+   no passive-interface
+   exit-af-interface
+  af-interface Loopback0
+   no shutdown
+   exit-af-interface
+  topology base
+   exit-af-topology
+  exit-address-family
+exit
+router ospf 1
+ default-information originate metric 50000
+exit
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 200.99.12.1 remote-as 19999
+exit
+no ip http server
+no ip http secure-server
+ip nat inside source list NAT interface Ethernet0/0 overload
+ip access-list standard NAT
+ permit 10.0.0.0 0.255.255.255
+exit
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+exit
+line vty 0 4
+ privilege level 15
+ no login
+ transport input all
+exit
+end
+write memory

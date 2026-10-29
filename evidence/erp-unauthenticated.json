@@ -1,0 +1,6 @@
+{
+  "url": "https://10.2.100.20:8443/api/orders",
+  "status": 401,
+  "body": "{\"error\": \"authentication required\"}",
+  "elapsed_seconds": 0.008
+}

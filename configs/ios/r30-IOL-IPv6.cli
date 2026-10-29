@@ -1,0 +1,49 @@
+enable
+configure terminal
+hostname r30-IOL-IPv6
+no aaa new-model
+no ip domain lookup
+ipv6 unicast-routing
+interface Loopback100
+ no shutdown
+ description Simulated-IaaS-Service
+ ip address 10.3.100.10 255.255.255.255
+exit
+interface Ethernet0/0
+ no shutdown
+ ip address 100.4.30.2 255.255.255.252
+ ipv6 address 2001:DB8:14::1/64
+exit
+interface Ethernet0/1
+ no shutdown
+ description Cloud-ERP-Linux
+ ip address 10.3.101.1 255.255.255.0
+exit
+router bgp 65003
+ bgp router-id 10.3.255.30
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 2001:DB8:14::2 remote-as 10000
+ neighbor 100.4.30.1 remote-as 10000
+ address-family ipv4
+  network 10.3.100.10 mask 255.255.255.255
+  network 10.3.101.0 mask 255.255.255.0
+  neighbor 100.4.30.1 activate
+  exit-address-family
+ address-family ipv6
+  network 2001:DB8:14::/64
+  neighbor 2001:DB8:14::2 activate
+  exit-address-family
+exit
+no ip http server
+no ip http secure-server
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

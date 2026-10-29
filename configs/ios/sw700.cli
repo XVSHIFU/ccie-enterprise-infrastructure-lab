@@ -1,0 +1,35 @@
+enable
+configure terminal
+service compress-config
+hostname sw700
+no aaa new-model
+no ip domain-lookup
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+interface Ethernet0/0
+ no shutdown
+ switchport mode access
+ spanning-tree portfast edge
+exit
+interface Ethernet0/1
+ no shutdown
+ switchport mode access
+ spanning-tree portfast edge
+exit
+interface Ethernet0/2
+ no shutdown
+ switchport mode access
+ spanning-tree portfast edge
+exit
+ip http server
+ip http secure-server
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+exit
+end
+write memory

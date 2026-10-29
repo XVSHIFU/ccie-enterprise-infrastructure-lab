@@ -1,0 +1,20 @@
+{
+  "total": 2,
+  "count": {
+    "Success": 2
+  },
+  "devices": [
+    {
+      "host-name": "vEdge22-Real",
+      "system-ip": "10.2.255.225",
+      "status": "Success",
+      "currentActivity": "Done - Push CLI Template Configuration"
+    },
+    {
+      "host-name": "vEdge21-Real",
+      "system-ip": "10.2.255.224",
+      "status": "Success",
+      "currentActivity": "Done - Push CLI Template Configuration"
+    }
+  ]
+}

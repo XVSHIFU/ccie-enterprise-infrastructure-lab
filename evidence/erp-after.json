@@ -1,0 +1,31 @@
+{
+  "url": "https://10.2.100.20:8443/api/orders",
+  "status": 200,
+  "body": {
+    "backend": "cloud",
+    "order_count": 3,
+    "data_sha256": "b7569e248fca528bf6206b7f3452e1b6b1fa6185a789bb24e51bc38c3b5fbb84",
+    "orders": [
+      [
+        1001,
+        "Demo-A",
+        "Router",
+        2
+      ],
+      [
+        1002,
+        "Demo-B",
+        "Switch",
+        5
+      ],
+      [
+        1003,
+        "Demo-C",
+        "Service",
+        1
+      ]
+    ],
+    "entrypoint": "dc-stable-url"
+  },
+  "elapsed_seconds": 0.092
+}

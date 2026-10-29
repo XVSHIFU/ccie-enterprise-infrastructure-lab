@@ -1,0 +1,102 @@
+enable
+configure terminal
+service compress-config
+hostname sw601
+no aaa new-model
+no ip domain-lookup
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 2000 priority 0
+vlan 2000-2001
+exit
+track 1 interface Ethernet0/1 line-protocol
+exit
+track 2 interface Ethernet0/2 line-protocol
+exit
+interface Ethernet0/0
+ no shutdown
+ no switchport
+ ip address 10.6.109.1 255.255.255.252
+exit
+interface Ethernet0/1
+ no shutdown
+ no switchport
+ ip address 10.6.13.2 255.255.255.252
+exit
+interface Ethernet0/2
+ no shutdown
+ no switchport
+ ip address 10.6.10.2 255.255.255.252
+exit
+interface Ethernet0/3
+ no shutdown
+ switchport trunk allowed vlan 2000,2001
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+exit
+interface Vlan2000
+ no shutdown
+ ip address 10.6.100.2 255.255.255.0
+ ip helper-address 10.2.255.211 redundancy BR3_V2000
+ standby version 2
+ standby 100 ip 10.6.100.1
+ standby 100 priority 110
+ standby 100 preempt
+ standby 100 name BR3_V2000
+ standby 100 track 1 shutdown
+ standby 100 track 2 shutdown
+exit
+interface Vlan2001
+ no shutdown
+ ip address 10.6.101.2 255.255.255.0
+ ip helper-address 10.2.255.211 redundancy BR3_V2001
+ standby version 2
+ standby 101 ip 10.6.101.1
+ standby 101 preempt
+ standby 101 name BR3_V2001
+ standby 101 track 1 shutdown
+ standby 101 track 2 shutdown
+exit
+router eigrp ccie
+ address-family ipv4 unicast autonomous-system 65006
+  af-interface default
+   passive-interface
+   exit-af-interface
+  af-interface Ethernet0/0
+   no passive-interface
+   exit-af-interface
+  af-interface Ethernet0/1
+   no passive-interface
+   exit-af-interface
+  af-interface Ethernet0/2
+   no passive-interface
+   exit-af-interface
+  topology base
+   distribute-list route-map UPLINK out Ethernet0/1
+   distribute-list route-map UPLINK out Ethernet0/2
+   exit-af-topology
+  network 10.6.0.0 0.0.255.255
+  eigrp stub connected leak-map LEAK
+  exit-address-family
+exit
+ip http server
+ip http secure-server
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip prefix-list PERMIT seq 5 permit 0.0.0.0/0
+route-map LEAK permit 10
+ match ip address prefix-list PERMIT
+exit
+route-map UPLINK deny 10
+ match ip address prefix-list PERMIT
+exit
+route-map UPLINK permit 20
+exit
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+exit
+end
+write memory

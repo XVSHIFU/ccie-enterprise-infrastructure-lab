@@ -1,0 +1,75 @@
+enable
+configure terminal
+hostname r21
+no aaa new-model
+clock timezone EET 2 0
+no ip domain lookup
+no cdp run
+interface Loopback0
+ no shutdown
+ ip address 10.2.255.21 255.255.255.255
+ ip ospf 1 area 0
+exit
+interface Ethernet0/0
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 100.3.21.2 255.255.255.252
+exit
+interface Ethernet0/1
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.99.1 255.255.255.252
+ ip ospf 1 area 0
+exit
+interface Ethernet0/2
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.13.1 255.255.255.252
+ ip ospf 1 area 0
+exit
+interface Ethernet0/3
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.10.1 255.255.255.252
+ ip ospf 1 area 0
+exit
+router ospf 1
+ prefix-suppression
+ redistribute bgp 65002 subnets tag 150
+exit
+router bgp 65002
+ bgp router-id 10.2.255.21
+ bgp log-neighbor-changes
+ network 10.2.255.21 mask 255.255.255.255
+ redistribute ospf 1 match external 1 external 2 route-map TAG
+ neighbor 10.2.255.22 remote-as 65002
+ neighbor 10.2.255.22 update-source Loopback0
+ neighbor 10.2.255.22 next-hop-self
+ neighbor 100.3.21.1 remote-as 10000
+ neighbor 100.3.21.1 prefix-list HQ-NO-SP out
+ neighbor 100.3.21.1 filter-list 1 in
+exit
+ip as-path access-list 1 deny _65001_
+ip as-path access-list 1 permit .*
+no ip http server
+no ip http secure-server
+ip prefix-list HQ-NO-SP seq 5 deny 10.1.0.0/16 le 32
+ip prefix-list HQ-NO-SP seq 10 permit 0.0.0.0/0 le 32
+route-map TAG deny 10
+ match tag 150
+exit
+route-map TAG permit 20
+exit
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+exit
+line vty 0 4
+ privilege level 15
+ no login
+ transport input all
+exit
+end
+write memory

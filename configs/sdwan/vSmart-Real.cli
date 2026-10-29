@@ -1,0 +1,154 @@
+config
+system
+ host-name             vSmart-Real
+ system-ip             10.2.255.222
+ site-id               2
+ admin-tech-on-failure
+ organization-name     CCIE-EI-LAB
+ vbond 10.2.251.2
+ aaa
+  auth-order local radius tacacs
+  usergroup basic
+   task system read write
+   task interface read write
+  exit
+  usergroup netadmin
+  exit
+  usergroup operator
+   task system read
+   task interface read
+   task policy read
+   task routing read
+   task security read
+  exit
+  usergroup tenantadmin
+  exit
+  user admin
+   password <对应实验密钥>
+  exit
+ exit
+ logging
+  disk
+   enable
+  exit
+ exit
+exit
+omp
+ no shutdown
+ graceful-restart
+exit
+vpn 0
+ interface eth0
+  ip address 10.2.250.2/24
+  ipv6 dhcp-client
+  tunnel-interface
+   allow-service all
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service stun
+  exit
+  no shutdown
+ exit
+ ip route 0.0.0.0/0 10.2.250.1
+exit
+vpn 512
+ interface eth1
+  ip dhcp-client
+  no shutdown
+ exit
+exit
+policy
+ lists
+  vpn-list G5-Employees
+   vpn 200
+   exit
+  exit
+  vpn-list G5-Enterprise
+   vpn 198
+   exit
+   vpn 200
+   exit
+  exit
+  vpn-list G5-IoT
+   vpn 198
+   exit
+  exit
+  vpn-list G5-Underlay
+   vpn 999
+   exit
+  exit
+  site-list G5-Branches
+   site-id 4
+   site-id 5
+  exit
+  site-list G5-DC
+   site-id 2
+  exit
+  prefix-list G5-Branch-Summary
+   ip-prefix 10.4.0.0/15 le 32
+  exit
+ exit
+ control-policy G5-Branch-Leak
+  sequence 10
+   match route
+    vpn-list G5-IoT
+   exit
+   action accept
+    set
+     omp-tag 198
+    exit
+    export-to
+     vpn-list G5-Underlay
+    exit
+   exit
+  exit
+  sequence 20
+   match route
+    vpn-list G5-Employees
+   exit
+   action accept
+    set
+     omp-tag 200
+    exit
+    export-to
+     vpn-list G5-Underlay
+    exit
+   exit
+  exit
+  default-action accept
+ exit
+ control-policy G5-DC-Leak
+  sequence 10
+   match route
+    prefix-list G5-Branch-Summary
+    vpn-list    G5-Underlay
+   exit
+   action reject
+   exit
+  exit
+  sequence 20
+   match route
+    vpn-list G5-Underlay
+   exit
+   action accept
+    export-to
+     vpn-list G5-Enterprise
+    exit
+   exit
+  exit
+  default-action accept
+ exit
+exit
+apply-policy
+ site-list G5-Branches
+  control-policy G5-Branch-Leak in
+ exit
+ site-list G5-DC
+  control-policy G5-DC-Leak in
+ exit
+exit
+commit and-quit

@@ -1,0 +1,88 @@
+enable
+configure terminal
+hostname r70
+vrf definition WAN
+ rd 65007:70
+ address-family ipv4
+  exit-address-family
+exit
+no aaa new-model
+no ip domain lookup
+crypto keyring KR vrf WAN
+ pre-shared-key address 0.0.0.0 0.0.0.0 key cisco
+exit
+crypto isakmp policy 10
+ encr 3des
+ authentication pre-share
+ group 2
+exit
+crypto ipsec transform-set trans esp-3des esp-md5-hmac
+ mode tunnel
+exit
+crypto ipsec profile prof
+ set security-association lifetime seconds 900
+ set transform-set trans
+exit
+interface Loopback0
+ no shutdown
+ vrf forwarding WAN
+ ip address 10.7.255.70 255.255.255.255
+exit
+interface Tunnel0
+ no shutdown
+ ip address 10.200.0.70 255.255.255.0
+ no ip redirects
+ ip mtu 1440
+ ip nhrp map 10.200.0.1 10.2.255.24
+ ip nhrp map multicast 10.2.255.24
+ ip nhrp network-id 1010
+ ip nhrp nhs 10.200.0.1
+ tunnel source Loopback0
+ tunnel mode gre multipoint
+ tunnel vrf WAN
+ tunnel protection ipsec profile prof
+exit
+interface Ethernet0/0
+ no shutdown
+ vrf forwarding WAN
+ ip address 100.6.70.2 255.255.255.252
+exit
+interface Ethernet0/2
+ no shutdown
+ ip address 10.7.1.1 255.255.255.0
+ ip helper-address 10.2.255.211
+exit
+router eigrp ccie
+ address-family ipv4 unicast autonomous-system 65006
+  af-interface default
+   passive-interface
+   exit-af-interface
+  af-interface Tunnel0
+   no passive-interface
+   exit-af-interface
+  topology base
+   exit-af-topology
+  network 10.7.0.0 0.0.255.255
+  network 10.200.0.0 0.0.0.255
+  exit-address-family
+exit
+router bgp 65007
+ bgp log-neighbor-changes
+ address-family ipv4 vrf WAN
+  network 10.7.255.70 mask 255.255.255.255
+  neighbor 100.6.70.1 remote-as 10000
+  neighbor 100.6.70.1 activate
+  exit-address-family
+exit
+no ip http server
+no ip http secure-server
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

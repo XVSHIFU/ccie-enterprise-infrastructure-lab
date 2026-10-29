@@ -1,0 +1,25 @@
+enable
+configure terminal
+hostname Global_SP2
+no aaa new-model
+no ip domain lookup
+interface Ethernet0/0
+ no shutdown
+ ip address 101.22.0.1 255.255.255.252
+exit
+router bgp 10001
+ bgp log-neighbor-changes
+ neighbor 101.22.0.2 remote-as 65002
+exit
+no ip http server
+no ip http secure-server
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

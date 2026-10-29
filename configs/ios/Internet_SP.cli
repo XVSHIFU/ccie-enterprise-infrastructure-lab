@@ -1,0 +1,44 @@
+enable
+configure terminal
+hostname Internet_SP
+no aaa new-model
+no ip domain lookup
+interface Loopback0
+ no shutdown
+ ip address 8.8.8.8 255.255.255.255
+exit
+interface Ethernet0/0
+ no shutdown
+ ip address 200.99.12.1 255.255.255.252
+exit
+interface Ethernet0/1
+ no shutdown
+ ip address 200.99.23.1 255.255.255.252
+exit
+interface Ethernet0/2
+ no shutdown
+ ip address 200.99.24.1 255.255.255.252
+exit
+router bgp 19999
+ bgp router-id 8.8.8.8
+ bgp log-neighbor-changes
+ network 8.8.8.8 mask 255.255.255.255
+ neighbor 200.99.12.2 remote-as 65001
+ neighbor 200.99.12.2 default-originate
+ neighbor 200.99.23.2 remote-as 65002
+ neighbor 200.99.23.2 default-originate
+ neighbor 200.99.24.2 remote-as 65002
+ neighbor 200.99.24.2 default-originate
+exit
+no ip http server
+no ip http secure-server
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

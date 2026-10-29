@@ -1,0 +1,113 @@
+enable
+configure terminal
+service compress-config
+hostname sw110
+no aaa new-model
+clock timezone EET 2 0
+ip dhcp snooping vlan 2000-2001
+ip dhcp snooping
+no ip domain-lookup
+spanning-tree mode rapid-pvst
+spanning-tree portfast edge default
+spanning-tree extend system-id
+spanning-tree pathcost method long
+vlan 2000-2001
+exit
+no cdp run
+interface Port-channel1
+ no shutdown
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ ip dhcp snooping trust
+exit
+interface Port-channel2
+ no shutdown
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ ip dhcp snooping trust
+exit
+interface Ethernet0/0
+ no shutdown
+ description https://ccielabcenter.com
+ switchport access vlan 2000
+ switchport mode access
+exit
+interface Ethernet0/1
+ no shutdown
+ description https://ccielabcenter.com
+ switchport access vlan 2001
+ switchport mode access
+ duplex full
+exit
+interface Ethernet0/2
+ no shutdown
+ description https://ccielabcenter.com
+exit
+interface Ethernet0/3
+ no shutdown
+ description https://ccielabcenter.com
+exit
+interface Ethernet1/0
+ no shutdown
+ description https://ccielabcenter.com
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+ ip dhcp snooping trust
+exit
+interface Ethernet1/1
+ no shutdown
+ description https://ccielabcenter.com
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+ ip dhcp snooping trust
+exit
+interface Ethernet1/2
+ no shutdown
+ description https://ccielabcenter.com
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode active
+ ip dhcp snooping trust
+exit
+interface Ethernet1/3
+ no shutdown
+ description https://ccielabcenter.com
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode active
+ ip dhcp snooping trust
+exit
+interface Ethernet2/0
+ no shutdown
+ description https://ccielabcenter.com
+exit
+interface Ethernet2/1
+ no shutdown
+ description https://ccielabcenter.com
+exit
+interface Ethernet2/2
+ no shutdown
+ description https://ccielabcenter.com
+exit
+interface Ethernet2/3
+ no shutdown
+ description https://ccielabcenter.com
+exit
+ip http server
+ip http secure-server
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+exit
+line vty 0 4
+ privilege level 15
+ no login
+ transport input all
+exit
+end
+write memory

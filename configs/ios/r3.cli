@@ -1,0 +1,106 @@
+enable
+configure terminal
+hostname r3
+vrf definition fabd2
+ rd 10000:3
+ address-family ipv4
+  route-target export 10000:1
+  route-target import 10000:1
+  route-target import 10000:3682
+  exit-address-family
+ address-family ipv6
+  export map HQ6-EXPORT
+  route-target export 10000:1
+  route-target import 10000:1
+  route-target import 10000:3681
+  exit-address-family
+exit
+no aaa new-model
+no ip domain lookup
+ipv6 unicast-routing
+mpls label mode all-vrfs protocol bgp-vpnv4 per-vrf
+mpls label mode all-vrfs protocol bgp-vpnv6 per-vrf
+no mpls ip propagate-ttl
+interface Loopback0
+ no shutdown
+ ip address 100.255.254.3 255.255.255.255
+ ip ospf 1 area 0
+exit
+interface Ethernet0/0
+ no shutdown
+ ip address 100.0.13.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip
+exit
+interface Ethernet0/1
+ no shutdown
+ vrf forwarding fabd2
+ ip address 100.3.11.1 255.255.255.252
+ ipv6 address 2001:2710:311::1/64
+exit
+interface Ethernet0/2
+ no shutdown
+ vrf forwarding fabd2
+ ip address 100.3.21.1 255.255.255.252
+exit
+router ospf 1
+exit
+router bgp 10000
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 100.255.254.4 remote-as 10000
+ neighbor 100.255.254.4 update-source Loopback0
+ neighbor 100.255.254.5 remote-as 10000
+ neighbor 100.255.254.5 update-source Loopback0
+ neighbor 100.255.254.6 remote-as 10000
+ neighbor 100.255.254.6 update-source Loopback0
+ address-family vpnv4
+  neighbor 100.255.254.4 activate
+  neighbor 100.255.254.4 send-community extended
+  neighbor 100.255.254.5 activate
+  neighbor 100.255.254.5 send-community extended
+  neighbor 100.255.254.6 activate
+  neighbor 100.255.254.6 send-community extended
+  exit-address-family
+ address-family vpnv6
+  neighbor 100.255.254.4 activate
+  neighbor 100.255.254.4 send-community extended
+  neighbor 100.255.254.5 activate
+  neighbor 100.255.254.5 send-community extended
+  neighbor 100.255.254.6 activate
+  neighbor 100.255.254.6 send-community extended
+  exit-address-family
+ address-family ipv4 vrf fabd2
+  neighbor 100.3.11.2 remote-as 65001
+  neighbor 100.3.11.2 activate
+  neighbor 100.3.21.2 remote-as 65002
+  neighbor 100.3.21.2 activate
+  exit-address-family
+ address-family ipv6 vrf fabd2
+  neighbor 100.3.11.2 remote-as 65001
+  neighbor 100.3.11.2 activate
+  neighbor 100.3.11.2 route-map NH6 in
+  exit-address-family
+exit
+ip as-path access-list 15 permit ^65001_
+no ip http server
+no ip http secure-server
+route-map HQ6-EXPORT permit 10
+ match as-path 15
+ set extcommunity rt 10000:3681 additive
+exit
+route-map NH6 permit 10
+ set ipv6 next-hop 2001:2710:311::2
+exit
+mpls ldp router-id Loopback0 force
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

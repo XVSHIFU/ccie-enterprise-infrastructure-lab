@@ -1,0 +1,121 @@
+enable
+configure terminal
+service call-home
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+hostname r30-CSR-G6
+vrf definition LAB4
+ rd 65003:4
+ address-family ipv4
+  exit-address-family
+exit
+vrf definition LAB6
+ rd 65003:6
+ address-family ipv6
+  exit-address-family
+exit
+vrf definition LABDUAL
+ rd 65003:46
+ address-family ipv4
+  exit-address-family
+ address-family ipv6
+  exit-address-family
+exit
+no aaa new-model
+call-home
+ contact-email-addr sch-smart-licensing@cisco.com
+ profile "CiscoTAC-1"
+  active
+  destination transport-method http
+  no destination transport-method email
+ exit
+exit
+ip domain name ccie.lab
+ipv6 unicast-routing
+crypto pki trustpoint SLA-TrustPoint
+ enrollment pkcs12
+ revocation-check crl
+exit
+crypto pki certificate pool
+ cabundle nvram:ios_core.p7b
+exit
+memory free low-watermark processor 72342
+spanning-tree extend system-id
+username labadmin privilege 15 secret <设备登录密码>
+interface Loopback104
+ no shutdown
+ vrf forwarding LAB4
+ ip address 192.0.2.4 255.255.255.255
+exit
+interface Loopback106
+ no shutdown
+ vrf forwarding LAB6
+ no ip address
+ ipv6 address 2001:DB8:6::1/128
+exit
+interface Loopback146
+ no shutdown
+ vrf forwarding LABDUAL
+ ip address 198.51.100.46 255.255.255.255
+ ipv6 address 2001:DB8:46::1/128
+exit
+interface VirtualPortGroup0
+ no shutdown
+ ip address 192.168.255.1 255.255.255.0
+ no mop enabled
+ no mop sysid
+exit
+interface GigabitEthernet1
+ no shutdown
+ ip address dhcp
+ ip access-group G6-MGMT-IN in
+ no mop enabled
+ no mop sysid
+exit
+interface GigabitEthernet2
+ no shutdown
+ description G6-host31-LAN
+ ip address 10.3.11.1 255.255.255.0
+ no mop enabled
+ no mop sysid
+exit
+interface GigabitEthernet3
+ no shutdown
+ no ip address
+ shutdown
+ no mop enabled
+ no mop sysid
+exit
+interface GigabitEthernet4
+ no shutdown
+ no ip address
+ shutdown
+ no mop enabled
+ no mop sysid
+exit
+iox
+ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip access-list extended G6-MGMT-IN
+ 10 deny   tcp any any eq www
+ 20 permit ip any any
+exit
+line con 0
+ stopbits 1
+exit
+line vty 0 4
+ login local
+ transport input all
+exit
+app-hosting appid guestshell
+ app-vnic gateway1 virtualportgroup 0 guest-interface 0
+  guest-ipaddress 192.168.255.2 netmask 255.255.255.0
+ exit
+ app-default-gateway 192.168.255.1 guest-interface 0
+exit
+restconf
+r30-CSR-G6
+end
+write memory

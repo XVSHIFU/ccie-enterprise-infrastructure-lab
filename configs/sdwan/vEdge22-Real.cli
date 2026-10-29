@@ -1,0 +1,144 @@
+config
+system
+ host-name               vEdge22-Real
+ system-ip               10.2.255.225
+ site-id                 2
+ admin-tech-on-failure
+ no route-consistency-check
+ organization-name       CCIE-EI-LAB
+ vbond 10.2.251.2
+ aaa
+  auth-order local radius tacacs
+  usergroup basic
+   task system read write
+   task interface read write
+  exit
+  usergroup netadmin
+  exit
+  usergroup operator
+   task system read
+   task interface read
+   task policy read
+   task routing read
+   task security read
+  exit
+  usergroup tenantadmin
+  exit
+  user admin
+   password <对应实验密钥>
+  exit
+ exit
+ logging
+  disk
+   enable
+  exit
+ exit
+exit
+omp
+ no shutdown
+ graceful-restart
+ advertise ospf external
+ advertise connected
+ advertise static
+exit
+security
+ ipsec
+  authentication-type ah-sha1-hmac sha1-hmac
+ exit
+exit
+vpn 0
+ interface ge0/0
+  ip address 10.2.201.2/29
+  ipv6 dhcp-client
+  tunnel-interface
+   encapsulation ipsec
+   allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+  exit
+  no shutdown
+ exit
+ interface ge0/1
+  ip address 10.2.202.2/29
+  tunnel-interface
+   encapsulation ipsec
+   color biz-internet
+   allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+  exit
+  no shutdown
+ exit
+ ip route 0.0.0.0/0 10.2.201.3
+ ip route 0.0.0.0/0 10.2.202.3
+exit
+vpn 199
+ name Guest
+ router
+  bgp 65002
+   router-id 10.2.255.225
+   address-family ipv4-unicast
+    redistribute omp
+   exit
+   neighbor 10.2.224.1
+    no shutdown
+    remote-as 65002
+    address-family ipv4-unicast
+   exit
+  exit
+ exit
+ interface ge0/2
+  ip address 10.2.224.2/24
+  no shutdown
+ exit
+ omp
+  advertise bgp
+ exit
+exit
+vpn 512
+ interface eth0
+  ip dhcp-client
+  no shutdown
+ exit
+exit
+vpn 999
+ name SDA-Underlay
+ router
+  ospf
+   router-id 10.2.255.225
+   timers spf 200 1000 10000
+   redistribute omp
+   area 0
+    interface ge0/0.3999
+    exit
+   interface ge0/1.3999
+   exit
+  exit
+ interface ge0/0.3999
+  ip address 10.2.201.10/29
+  mtu      1496
+  no shutdown
+ exit
+ interface ge0/1.3999
+  ip address 10.2.202.10/29
+  mtu      1496
+  no shutdown
+ exit
+exit
+commit and-quit

@@ -1,0 +1,101 @@
+enable
+configure terminal
+hostname r4
+vrf definition giosk
+ rd 10000:4
+ address-family ipv4
+  import map CLOUD-IMPORT
+  route-target export 10000:3
+  route-target export 10000:3682
+  route-target import 10000:3
+  route-target import 10000:3682
+  route-target import 10000:1
+  exit-address-family
+ address-family ipv6
+  route-target export 10000:3
+  route-target export 10000:3681
+  route-target import 10000:3
+  route-target import 10000:3681
+  exit-address-family
+exit
+no aaa new-model
+no ip domain lookup
+ipv6 unicast-routing
+mpls label mode all-vrfs protocol bgp-vpnv4 per-vrf
+mpls label mode all-vrfs protocol bgp-vpnv6 per-vrf
+no mpls ip propagate-ttl
+interface Loopback0
+ no shutdown
+ ip address 100.255.254.4 255.255.255.255
+ ip ospf 1 area 0
+exit
+interface Ethernet0/0
+ no shutdown
+ ip address 100.0.24.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip
+exit
+interface Ethernet0/1
+ no shutdown
+ vrf forwarding giosk
+ ip address 100.4.30.1 255.255.255.252
+ ipv6 address 2001:DB8:14::2/64
+exit
+router ospf 1
+exit
+router bgp 10000
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 100.255.254.3 remote-as 10000
+ neighbor 100.255.254.3 update-source Loopback0
+ neighbor 100.255.254.5 remote-as 10000
+ neighbor 100.255.254.5 update-source Loopback0
+ neighbor 100.255.254.6 remote-as 10000
+ neighbor 100.255.254.6 update-source Loopback0
+ address-family vpnv4
+  neighbor 100.255.254.3 activate
+  neighbor 100.255.254.3 send-community extended
+  neighbor 100.255.254.5 activate
+  neighbor 100.255.254.5 send-community extended
+  neighbor 100.255.254.6 activate
+  neighbor 100.255.254.6 send-community extended
+  exit-address-family
+ address-family vpnv6
+  neighbor 100.255.254.3 activate
+  neighbor 100.255.254.3 send-community extended
+  neighbor 100.255.254.5 activate
+  neighbor 100.255.254.5 send-community extended
+  neighbor 100.255.254.6 activate
+  neighbor 100.255.254.6 send-community extended
+  exit-address-family
+ address-family ipv4 vrf giosk
+  neighbor 100.4.30.2 remote-as 65003
+  neighbor 100.4.30.2 activate
+  exit-address-family
+ address-family ipv6 vrf giosk
+  network 2001:DB8:14::/64
+  neighbor 2001:DB8:14::1 remote-as 65003
+  neighbor 2001:DB8:14::1 activate
+  exit-address-family
+exit
+no ip http server
+no ip http secure-server
+ip prefix-list CLOUD-IMPORT seq 5 permit 10.1.0.0/16 le 32
+ip prefix-list CLOUD-IMPORT seq 10 permit 10.2.0.0/16 le 32
+ip prefix-list CLOUD-IMPORT seq 15 permit 10.4.200.0/24
+ip prefix-list CLOUD-IMPORT seq 20 permit 10.6.0.0/16
+route-map CLOUD-IMPORT permit 10
+ match ip address prefix-list CLOUD-IMPORT
+exit
+mpls ldp router-id Loopback0 force
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+exit
+line vty 0 4
+ login
+ transport input none
+exit
+end
+write memory

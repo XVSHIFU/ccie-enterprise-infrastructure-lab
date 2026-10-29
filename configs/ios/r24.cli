@@ -1,0 +1,146 @@
+enable
+configure terminal
+hostname r24
+vrf definition Guest
+ rd 65002:199
+ address-family ipv4
+  exit-address-family
+exit
+no aaa new-model
+clock timezone EET 2 0
+no ip domain lookup
+no cdp run
+crypto isakmp policy 10
+ encr 3des
+ authentication pre-share
+ group 2
+exit
+crypto isakmp key <DMVPN共享密钥> address 0.0.0.0
+crypto ipsec transform-set trans esp-3des esp-md5-hmac
+ mode tunnel
+exit
+crypto ipsec profile prof
+ set security-association lifetime seconds 900
+ set transform-set trans
+exit
+interface Loopback0
+ no shutdown
+ ip address 10.2.255.24 255.255.255.255
+ ip ospf 1 area 0
+exit
+interface Loopback14
+ no shutdown
+ ip address 14.14.14.14 255.255.255.255
+ ip pim sparse-mode
+exit
+interface Loopback114
+ no shutdown
+ ip address 14.14.14.114 255.255.255.255
+ ip pim sparse-mode
+ ip igmp join-group 239.1.1.70
+exit
+interface Tunnel0
+ no shutdown
+ ip address 10.200.0.1 255.255.255.0
+ no ip redirects
+ ip mtu 1440
+ ip pim sparse-mode
+ ip nhrp network-id 1010
+ ip nhrp redirect
+ tunnel source Loopback0
+ tunnel mode gre multipoint
+ tunnel protection ipsec profile prof
+exit
+interface Ethernet0/0
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 200.99.24.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+exit
+interface Ethernet0/1
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.114.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+exit
+interface Ethernet0/2
+ no shutdown
+ description https://ccielabcenter.com
+ ip address 10.2.214.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+exit
+interface Ethernet0/3
+ no shutdown
+ description https://ccielabcenter.com
+ vrf forwarding Guest
+ ip address 10.2.224.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+exit
+router eigrp ccie
+ address-family ipv4 unicast autonomous-system 65006
+  af-interface default
+   passive-interface
+   exit-af-interface
+  af-interface Tunnel0
+   summary-address 0.0.0.0 0.0.0.0
+   no passive-interface
+   exit-af-interface
+  topology base
+   exit-af-topology
+  network 10.200.0.0 0.0.0.255
+  network 14.0.0.0
+  network 14.14.14.14 0.0.0.0
+  network 14.14.14.114 0.0.0.0
+  exit-address-family
+exit
+router ospf 1
+ router-id 10.2.255.24
+ prefix-suppression
+ summary-address 10.6.0.0 255.255.0.0
+ summary-address 14.0.0.0 255.0.0.0 not-advertise
+ redistribute eigrp 65006 subnets tag 150
+ default-information originate route-map INTERNET
+exit
+router bgp 65002
+ bgp log-neighbor-changes
+ neighbor 200.99.24.1 remote-as 19999
+ distance 4 200.99.24.1 0.0.0.0
+ address-family ipv4 vrf Guest
+  network 0.0.0.0
+  neighbor 10.2.224.2 remote-as 65002
+  neighbor 10.2.224.2 activate
+  exit-address-family
+exit
+no ip http server
+no ip http secure-server
+ip pim rp-address 14.14.14.14 override
+ip nat inside source list NAT interface Ethernet0/0 overload
+ip nat inside source list NAT interface Ethernet0/0 vrf Guest overload
+ip route vrf Guest 0.0.0.0 0.0.0.0 200.99.24.1 global
+ip access-list standard NAT
+ permit 10.0.0.0 0.255.255.255
+exit
+ip prefix-list INTERNET seq 5 permit 0.0.0.0/0
+route-map INTERNET permit 10
+ match ip address prefix-list INTERNET
+ match tag 19999
+exit
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+exit
+line vty 0 4
+ privilege level 15
+ no login
+ transport input all
+exit
+end
+write memory

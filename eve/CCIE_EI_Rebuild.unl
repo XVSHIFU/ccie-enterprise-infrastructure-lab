@@ -1,0 +1,437 @@
+<?xml version='1.0' encoding='utf-8'?>
+<lab name="CCIE_EI_Rebuild" id="a04da72d-87d8-43fa-aebc-f2f7be754154" version="4" scripttimeout="300" lock="0" author="hybrid-wan-lab; adapted from course topology">
+  <description>Enterprise hybrid WAN lab: HQ, DC, IaaS, SD-WAN, DMVPN and ERP demo.</description>
+  <body>Enterprise hybrid WAN lab: HQ, DC, IaaS, SD-WAN, DMVPN and ERP demo.</body>
+  <topology>
+    <nodes>
+      <node id="42" name="host12" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Desktop2.png" config="0" left="440" top="430">
+        <interface id="0" name="e0/0" type="ethernet" network_id="2" />
+      </node>
+      <node id="1" name="sw110" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="3" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="290" top="590">
+        <interface id="0" name="e0/0" type="ethernet" network_id="16" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="2" />
+        <interface id="1" name="e1/0" type="ethernet" network_id="7" />
+        <interface id="17" name="e1/1" type="ethernet" network_id="8" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="5" />
+        <interface id="49" name="e1/3" type="ethernet" network_id="6" />
+      </node>
+      <node id="2" name="sw101" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="3" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="140" top="800">
+        <interface id="0" name="e0/0" type="ethernet" network_id="9" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="12" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="37" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="7" />
+        <interface id="49" name="e1/3" type="ethernet" network_id="8" />
+        <interface id="2" name="e2/0" type="ethernet" network_id="3" />
+        <interface id="18" name="e2/1" type="ethernet" network_id="4" />
+      </node>
+      <node id="3" name="sw212" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="3" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="1120" top="620">
+        <interface id="0" name="e0/0" type="ethernet" network_id="35" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="36" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="31" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="70" />
+        <interface id="1" name="e1/0" type="ethernet" network_id="76" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="77" />
+      </node>
+      <node id="4" name="sw102" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="3" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="440" top="800">
+        <interface id="0" name="e0/0" type="ethernet" network_id="10" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="13" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="86" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="5" />
+        <interface id="49" name="e1/3" type="ethernet" network_id="6" />
+        <interface id="2" name="e2/0" type="ethernet" network_id="3" />
+        <interface id="18" name="e2/1" type="ethernet" network_id="4" />
+      </node>
+      <node id="10" name="sw202" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="3" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="1120" top="840">
+        <interface id="0" name="e0/0" type="ethernet" network_id="26" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="29" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="82" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="25" />
+        <interface id="1" name="e1/0" type="ethernet" network_id="39" />
+        <interface id="17" name="e1/1" type="ethernet" network_id="35" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="86" />
+        <interface id="49" name="e1/3" type="ethernet" network_id="83" />
+      </node>
+      <node id="19" name="sw211" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="3" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="780" top="620">
+        <interface id="0" name="e0/0" type="ethernet" network_id="81" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="39" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="31" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="69" />
+        <interface id="1" name="e1/0" type="ethernet" network_id="75" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="67" />
+        <interface id="49" name="e1/3" type="ethernet" network_id="68" />
+        <interface id="2" name="e2/0" type="ethernet" network_id="63" />
+      </node>
+      <node id="21" name="r12" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router.png" config="0" left="440" top="1020">
+        <interface id="0" name="e0/0" type="ethernet" network_id="1" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="11" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="12" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="10" />
+      </node>
+      <node id="25" name="r11" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router.png" config="0" left="140" top="1020">
+        <interface id="0" name="e0/0" type="ethernet" network_id="22" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="11" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="13" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="9" />
+      </node>
+      <node id="44" name="r23" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router2.png" config="0" left="700" top="410">
+        <interface id="0" name="e0/0" type="ethernet" network_id="14" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="69" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="70" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="30" />
+      </node>
+      <node id="45" name="r24" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router2.png" config="0" left="1449" top="408">
+        <interface id="0" name="e0/0" type="ethernet" network_id="15" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="75" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="76" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="78" />
+      </node>
+      <node id="47" name="r22" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router2.png" config="0" left="1120" top="1070">
+        <interface id="0" name="e0/0" type="ethernet" network_id="27" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="24" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="38" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="26" />
+      </node>
+      <node id="50" name="r21" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router2.png" config="0" left="780" top="1070">
+        <interface id="0" name="e0/0" type="ethernet" network_id="23" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="24" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="29" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="80" />
+      </node>
+      <node id="13" name="sw201" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="2" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="780" top="840">
+        <interface id="0" name="e0/0" type="ethernet" network_id="80" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="38" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="87" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="25" />
+        <interface id="1" name="e1/0" type="ethernet" network_id="36" />
+        <interface id="17" name="e1/1" type="ethernet" network_id="81" />
+        <interface id="33" name="e1/2" type="ethernet" network_id="37" />
+        <interface id="49" name="e1/3" type="ethernet" network_id="74" />
+      </node>
+      <node id="41" name="host11" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="140" top="430">
+        <interface id="0" name="eth0" type="ethernet" network_id="16" />
+      </node>
+      <node id="5" name="Internet_SP" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1152" top="126">
+        <interface id="0" name="e0/0" type="ethernet" network_id="1" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="14" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="15" />
+      </node>
+      <node id="6" name="r1" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1050" top="1490">
+        <interface id="0" name="e0/0" type="ethernet" network_id="17" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="18" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="19" />
+      </node>
+      <node id="7" name="r2" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1330" top="1490">
+        <interface id="0" name="e0/0" type="ethernet" network_id="17" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="20" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="21" />
+      </node>
+      <node id="8" name="r3" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="820" top="1360">
+        <interface id="0" name="e0/0" type="ethernet" network_id="18" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="22" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="23" />
+      </node>
+      <node id="9" name="r4" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1570" top="1360">
+        <interface id="0" name="e0/0" type="ethernet" network_id="20" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="28" />
+      </node>
+      <node id="11" name="r5" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1050" top="1680">
+        <interface id="0" name="e0/0" type="ethernet" network_id="19" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="32" />
+      </node>
+      <node id="12" name="r6" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1330" top="1680">
+        <interface id="0" name="e0/0" type="ethernet" network_id="21" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="33" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="34" />
+      </node>
+      <node id="14" name="Global_SP2" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="270" top="1390">
+        <interface id="0" name="e0/0" type="ethernet" network_id="27" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="59" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="60" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="58" />
+      </node>
+      <node id="15" name="r30-IOL-IPv6" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1920" top="1030">
+        <interface id="0" name="e0/0" type="ethernet" network_id="28" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="64" />
+      </node>
+      <node id="16" name="r61" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1179" top="1968">
+        <interface id="0" name="e0/0" type="ethernet" network_id="32" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="40" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="41" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="42" />
+      </node>
+      <node id="17" name="r62" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1479" top="1968">
+        <interface id="0" name="e0/0" type="ethernet" network_id="33" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="40" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="43" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="44" />
+      </node>
+      <node id="18" name="r70" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="1910" top="1970">
+        <interface id="0" name="e0/0" type="ethernet" network_id="34" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="50" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="51" />
+      </node>
+      <node id="22" name="sw601" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="1179" top="2160">
+        <interface id="0" name="e0/0" type="ethernet" network_id="45" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="43" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="42" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="46" />
+      </node>
+      <node id="26" name="sw602" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="1479" top="2160">
+        <interface id="0" name="e0/0" type="ethernet" network_id="45" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="41" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="44" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="47" />
+      </node>
+      <node id="27" name="sw610" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="1329" top="2328">
+        <interface id="0" name="e0/0" type="ethernet" network_id="48" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="49" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="46" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="47" />
+      </node>
+      <node id="28" name="sw700" type="iol" template="iol" image="l2-adventerprisek9-ms.SSA.high_iron_20190423.bin" ethernet="1" nvram="512" ram="512" serial="0" console="" delay="0" icon="Switch L3.png" config="0" left="1910" top="2200">
+        <interface id="0" name="e0/0" type="ethernet" network_id="52" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="53" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="50" />
+        <interface id="48" name="e0/3" type="ethernet" network_id="51" />
+      </node>
+      <node id="29" name="host61" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="1179" top="2499">
+        <interface id="0" name="eth0" type="ethernet" network_id="48" />
+      </node>
+      <node id="30" name="host62" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="1480" top="2500">
+        <interface id="0" name="eth0" type="ethernet" network_id="49" />
+      </node>
+      <node id="31" name="host71" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="1770" top="2460">
+        <interface id="0" name="eth0" type="ethernet" network_id="52" />
+      </node>
+      <node id="32" name="host72" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="2050" top="2460">
+        <interface id="0" name="eth0" type="ethernet" network_id="53" />
+      </node>
+      <node id="34" name="r30-CSR-G6" type="qemu" template="csr1000vng" image="csr1000vng-universalk9.16.12.02s-serial" console="telnet" cpu="1" cpulimit="1" ram="4096" ethernet="4" uuid="8ed69728-bf2a-4b90-aa77-e749e66f74c7" qemu_options="-machine type=pc,accel=kvm -cpu host -serial mon:stdio -nographic -no-user-config -nodefaults -rtc base=utc" qemu_version="4.1.0" qemu_arch="x86_64" qemu_nic="vmxnet3" delay="0" icon="CSRv1000.png" config="0" left="2085" top="936">
+        <interface id="0" name="Gi1" type="ethernet" network_id="54" />
+        <interface id="1" name="Gi2" type="ethernet" network_id="55" />
+      </node>
+      <node id="35" name="vManage-Real" type="qemu" template="vtmgmt" image="vtmgmt-18.4.3" console="telnet" cpu="4" cpulimit="1" ram="16384" ethernet="2" uuid="3d02c37b-02d6-4779-8ceb-2639df45d081" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" icon="vManage.png" config="0" left="1239" top="405">
+        <interface id="0" name="eth0" type="ethernet" network_id="77" />
+        <interface id="1" name="eth1" type="ethernet" network_id="54" />
+      </node>
+      <node id="36" name="vBond-Real" type="qemu" template="vtbond" image="vtbond-18.4.3" console="telnet" cpu="1" cpulimit="1" ram="1024" ethernet="2" uuid="c9da05b9-2723-4c18-ac3f-c6052f027b30" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" icon="vBond.png" config="0" left="873" top="405">
+        <interface id="0" name="eth0" type="ethernet" network_id="54" />
+        <interface id="1" name="ge0/0" type="ethernet" network_id="67" />
+      </node>
+      <node id="37" name="vSmart-Real" type="qemu" template="vtsmart" image="vtsmart-18.4.3" console="telnet" cpu="2" cpulimit="1" ram="2048" ethernet="2" uuid="a32f3d36-ecee-4e93-9710-adfec5b25e16" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" icon="vSmart.png" config="0" left="1056" top="420">
+        <interface id="0" name="eth0" type="ethernet" network_id="68" />
+        <interface id="1" name="eth1" type="ethernet" network_id="54" />
+      </node>
+      <node id="39" name="vEdge21-Real" type="qemu" template="vtedge" image="vtedge-18.4.3" console="telnet" cpu="1" cpulimit="1" ram="1024" ethernet="4" uuid="94bef3ec-6769-419b-8f88-7e4015e02620" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000" delay="0" icon="vEdge.png" config="0" left="610" top="850">
+        <interface id="0" name="eth0" type="ethernet" network_id="54" />
+        <interface id="1" name="ge0/0" type="ethernet" network_id="74" />
+        <interface id="2" name="ge0/1" type="ethernet" network_id="82" />
+        <interface id="3" name="ge0/2" type="ethernet" network_id="30" />
+      </node>
+      <node id="40" name="vEdge22-Real" type="qemu" template="vtedge" image="vtedge-18.4.3" console="telnet" cpu="1" cpulimit="1" ram="1024" ethernet="4" uuid="fd1a0fe2-d6ae-4759-975e-8710ea979194" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000" delay="0" icon="vEdge.png" config="0" left="1428" top="699">
+        <interface id="0" name="eth0" type="ethernet" network_id="54" />
+        <interface id="1" name="ge0/0" type="ethernet" network_id="87" />
+        <interface id="2" name="ge0/1" type="ethernet" network_id="83" />
+        <interface id="3" name="ge0/2" type="ethernet" network_id="78" />
+      </node>
+      <node id="43" name="host31" type="qemu" template="slax" image="slax-mini-VM" console="vnc" cpu="1" cpulimit="1" ram="1024" ethernet="1" uuid="b9f163d6-b8a7-490c-a011-34bce6c6210b" qemu_options="-machine type=pc,accel=kvm -vga virtio -usbdevice tablet -boot order=cd" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000" delay="0" icon="Server.png" config="0" left="2031" top="528">
+        <interface id="0" name="e0" type="ethernet" network_id="55" />
+      </node>
+      <node id="46" name="vEdge41-Real" type="qemu" template="vtedge" image="vtedge-18.4.3" console="telnet" cpu="1" cpulimit="1" ram="1024" ethernet="4" uuid="c04f8f32-55d4-4a1e-850f-555f398572f7" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000" delay="0" icon="vEdge.png" config="0" left="159" top="1968">
+        <interface id="0" name="eth0" type="ethernet" network_id="54" />
+        <interface id="1" name="ge0/0" type="ethernet" network_id="61" />
+        <interface id="2" name="ge0/1" type="ethernet" network_id="59" />
+        <interface id="3" name="ge0/2" type="ethernet" network_id="56" />
+      </node>
+      <node id="48" name="host42-SDWAN-Test" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="300" top="2220">
+        <interface id="0" name="eth0" type="ethernet" network_id="56" />
+      </node>
+      <node id="49" name="vEdge51-Real" type="qemu" template="vtedge" image="vtedge-18.4.3" console="telnet" cpu="1" cpulimit="1" ram="1024" ethernet="4" uuid="37ea2a57-c4b6-48c6-a8f3-bb01e27858b0" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000" delay="0" icon="vEdge.png" config="0" left="660" top="1970">
+        <interface id="0" name="eth0" type="ethernet" network_id="54" />
+        <interface id="1" name="ge0/0" type="ethernet" network_id="62" />
+        <interface id="2" name="ge0/1" type="ethernet" network_id="60" />
+        <interface id="3" name="ge0/2" type="ethernet" network_id="57" />
+      </node>
+      <node id="51" name="host52-SDWAN-Test" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="820" top="2220">
+        <interface id="0" name="eth0" type="ethernet" network_id="57" />
+      </node>
+      <node id="52" name="G5-Hybrid-GW" type="iol" template="iol" image="l3-AdvEnterpriseK9-M2_157_3_May_2018.bin" ethernet="1" nvram="128" ram="512" serial="0" console="" delay="0" icon="Router.png" config="0" left="180" top="2350">
+        <interface id="0" name="e0/0" type="ethernet" network_id="65" />
+        <interface id="16" name="e0/1" type="ethernet" network_id="61" />
+        <interface id="32" name="e0/2" type="ethernet" network_id="48" />
+      </node>
+      <node id="20" name="vEdge52-Real" type="qemu" template="vtedge" image="vtedge-18.4.3" console="telnet" cpu="1" cpulimit="1" ram="1024" ethernet="4" uuid="a13fac3b-ab51-4424-8907-ed4153a989db" qemu_options="-machine type=pc,accel=kvm -cpu host -vga std -usbdevice tablet -boot order=dc -cpu host" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000" delay="0" icon="vEdge.png" config="0" left="910" top="1970">
+        <interface id="0" name="eth0" type="ethernet" network_id="54" />
+        <interface id="1" name="ge0/0" type="ethernet" network_id="62" />
+        <interface id="2" name="ge0/1" type="ethernet" network_id="58" />
+      </node>
+      <node id="23" name="host41-Employees" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="120" top="2220">
+        <interface id="0" name="eth0" type="ethernet" network_id="61" />
+      </node>
+      <node id="24" name="host51-Employees" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop.png" config="0" left="610" top="2220">
+        <interface id="0" name="eth0" type="ethernet" network_id="62" />
+      </node>
+    </nodes>
+    <networks>
+      <network id="2" type="bridge" name="Net-sw1iface_16" left="499" top="183" visibility="0" />
+      <network id="3" type="bridge" name="Net-sw2iface_2" left="456" top="384" visibility="0" />
+      <network id="4" type="bridge" name="Net-sw2iface_18" left="344" top="352" visibility="0" />
+      <network id="5" type="bridge" name="Net-sw1iface_33" left="514" top="292" visibility="0" />
+      <network id="6" type="bridge" name="Net-sw1iface_49" left="366" top="328" visibility="0" />
+      <network id="7" type="bridge" name="Net-sw1iface_1" left="490" top="286" visibility="0" />
+      <network id="8" type="bridge" name="Net-sw1iface_17" left="286" top="387" visibility="0" />
+      <network id="9" type="bridge" name="Net-sw2iface_0" left="350" top="266" visibility="0" />
+      <network id="10" type="bridge" name="Net-sw4iface_0" left="453" top="382" visibility="0" />
+      <network id="11" type="bridge" name="Net-r25iface_16" left="476" top="381" visibility="0" />
+      <network id="12" type="bridge" name="Net-sw2iface_16" left="385" top="271" visibility="0" />
+      <network id="13" type="bridge" name="Net-sw4iface_16" left="404" top="227" visibility="0" />
+      <network id="24" type="bridge" name="Net-r50iface_16" left="481" top="381" visibility="0" />
+      <network id="26" type="bridge" name="Net-sw10iface_0" left="292" top="208" visibility="0" />
+      <network id="29" type="bridge" name="Net-r50iface_32" left="442" top="287" visibility="0" />
+      <network id="31" type="bridge" name="Net-sw19iface_32" left="480" top="314" visibility="0" />
+      <network id="35" type="bridge" name="Net-sw3iface_0" left="325" top="186" visibility="0" />
+      <network id="39" type="bridge" name="Net-sw19iface_16" left="291" top="389" visibility="0" />
+      <network id="69" type="bridge" name="Net-r23iface_16" left="450" top="348" visibility="0" />
+      <network id="70" type="bridge" name="Net-r23iface_32" left="458" top="338" visibility="0" />
+      <network id="75" type="bridge" name="Net-r24iface_16" left="470" top="350" visibility="0" />
+      <network id="76" type="bridge" name="Net-r24iface_32" left="332" top="226" visibility="0" />
+      <network id="86" type="bridge" name="Net-sw102iface_32" left="395" top="183" visibility="0" />
+      <network id="25" type="bridge" name="Net-sw201iface_48" left="894" top="421" visibility="0" />
+      <network id="36" type="bridge" name="Net-sw201iface_1" left="894" top="421" visibility="0" />
+      <network id="37" type="bridge" name="Net-sw201iface_33" left="894" top="421" visibility="0" />
+      <network id="80" type="bridge" name="Net-sw201iface_0" left="894" top="331" visibility="0" />
+      <network id="38" type="bridge" name="Net-sw201iface_16" left="903" top="421" visibility="0" />
+      <network id="81" type="bridge" name="Net-sw201iface_17" left="903" top="691" visibility="0" />
+      <network id="16" type="bridge" name="Net-host11iface_0" left="222" top="463" visibility="0" />
+      <network id="30" type="bridge" name="Net-r23iface_48" left="680" top="690" visibility="1" />
+      <network id="74" type="bridge" name="Net-vEdge21iface_0" left="620" top="1160" visibility="1" />
+      <network id="82" type="bridge" name="Net-vEdge21iface_16" left="1461" top="1134" visibility="1" />
+      <network id="78" type="bridge" name="Net-r24iface_48" left="1437" top="588" visibility="1" />
+      <network id="83" type="bridge" name="Net-vEdge22iface_16" left="1260" top="780" visibility="1" />
+      <network id="87" type="bridge" name="Net-vEdge22iface_0" left="1371" top="873" visibility="1" />
+      <network id="77" type="bridge" name="Net-vManageiface_0" left="1272" top="642" visibility="1" />
+      <network id="67" type="bridge" name="Net-vBondiface_0" left="870" top="530" visibility="1" />
+      <network id="68" type="bridge" name="Net-vSmartiface_0" left="1010" top="530" visibility="1" />
+      <network id="1" type="bridge" name="Internet-r12" left="900" top="150" visibility="0" />
+      <network id="14" type="bridge" name="Internet-r23" left="900" top="150" visibility="0" />
+      <network id="15" type="bridge" name="Internet-r24" left="900" top="150" visibility="0" />
+      <network id="17" type="bridge" name="100.0.12" left="400" top="1000" visibility="0" />
+      <network id="18" type="bridge" name="100.0.13" left="400" top="1000" visibility="0" />
+      <network id="19" type="bridge" name="100.0.15" left="400" top="1000" visibility="0" />
+      <network id="20" type="bridge" name="100.0.24" left="400" top="1000" visibility="0" />
+      <network id="21" type="bridge" name="100.0.26" left="400" top="1000" visibility="0" />
+      <network id="22" type="bridge" name="100.3.11" left="400" top="1000" visibility="0" />
+      <network id="23" type="bridge" name="100.3.21" left="400" top="1000" visibility="0" />
+      <network id="27" type="bridge" name="101.22.0" left="400" top="1000" visibility="0" />
+      <network id="28" type="bridge" name="IaaS-routing" left="1000" top="950" visibility="0" />
+      <network id="32" type="bridge" name="r5-r61" left="500" top="1400" visibility="0" />
+      <network id="33" type="bridge" name="r6-r62" left="500" top="1400" visibility="0" />
+      <network id="34" type="bridge" name="r6-r70" left="500" top="1400" visibility="0" />
+      <network id="40" type="bridge" name="r61-r62" left="500" top="1400" visibility="0" />
+      <network id="41" type="bridge" name="r61-sw602" left="500" top="1400" visibility="0" />
+      <network id="42" type="bridge" name="r61-sw601" left="500" top="1400" visibility="0" />
+      <network id="43" type="bridge" name="r62-sw601" left="500" top="1400" visibility="0" />
+      <network id="44" type="bridge" name="r62-sw602" left="500" top="1400" visibility="0" />
+      <network id="45" type="bridge" name="sw601-sw602" left="500" top="1400" visibility="0" />
+      <network id="46" type="bridge" name="sw601-sw610" left="500" top="1400" visibility="0" />
+      <network id="47" type="bridge" name="sw602-sw610" left="500" top="1400" visibility="0" />
+      <network id="48" type="bridge" name="sw610-host61" left="500" top="1400" visibility="1" />
+      <network id="49" type="bridge" name="sw610-host62" left="500" top="1400" visibility="0" />
+      <network id="50" type="bridge" name="r70-sw700" left="500" top="1400" visibility="0" />
+      <network id="51" type="bridge" name="r70-sw700" left="500" top="1400" visibility="0" />
+      <network id="52" type="bridge" name="sw700-host71" left="500" top="1400" visibility="0" />
+      <network id="53" type="bridge" name="sw700-host72" left="500" top="1400" visibility="0" />
+      <network id="54" type="pnet0" name="G6-Management" left="2320" top="160" visibility="1" />
+      <network id="55" type="bridge" name="G6-host31-LAN" left="2007" top="753" visibility="1" />
+      <network id="56" type="bridge" name="G5-Branch1-Guest-Test" left="300" top="2100" visibility="1" />
+      <network id="57" type="bridge" name="G5-Branch2-Guest-Test" left="820" top="2100" visibility="1" />
+      <network id="58" type="bridge" name="SP2-vEdge52" left="640" top="1650" visibility="1" />
+      <network id="59" type="bridge" name="SP2-vEdge40" left="320" top="1650" visibility="1" />
+      <network id="60" type="bridge" name="SP2-vEdge51" left="480" top="1650" visibility="1" />
+      <network id="61" type="bridge" name="BR1-Employees" left="120" top="2100" visibility="1" />
+      <network id="62" type="bridge" name="BR2-Employees" left="580" top="2100" visibility="1" />
+      <network id="63" type="bridge" name="DC-ERP-Linux" left="980" top="700" visibility="1" />
+      <network id="64" type="bridge" name="Cloud-ERP-Linux" left="1920" top="800" visibility="1" />
+      <network id="65" type="bridge" name="Hybrid-Users-Linux" left="180" top="2440" visibility="1" />
+    </networks>
+  </topology>
+  <objects>
+    <textobjects>
+      <textobject id="101" name="Headquarters 总部区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMDEiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTAxIiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDo3MHB4O3RvcDozMTBweDt3aWR0aDo0ODBweDtoZWlnaHQ6ODMwcHg7ei1pbmRleDowO3BvaW50ZXItZXZlbnRzOm5vbmU7Ij48c3ZnIHdpZHRoPSI0ODAiIGhlaWdodD0iODMwIj48cmVjdCB4PSIyIiB5PSIyIiByeD0iMTYiIHdpZHRoPSI0NzYiIGhlaWdodD0iODI2IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mjk2YjAiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="102" name="Headquarters 总部" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEwMiIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEwMiIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6OTBweDt0b3A6MzI4cHg7d2lkdGg6NDQwcHg7ei1pbmRleDoxMDAxO2ZvbnQtZmFtaWx5OkFyaWFsOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj48ZGl2IHN0eWxlPSJmb250LXNpemU6MjRweDtmb250LXdlaWdodDpib2xkO2NvbG9yOiMyNDU2Nzk7Ij5IZWFkcXVhcnRlcnMg5oC76YOoPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjE0cHg7Y29sb3I6IzU2NjU3NTttYXJnaW4tdG9wOjZweDsiPkFTIDY1MDAxIMK3IDEwLjEuMC4wLzE2PC9kaXY+PC9kaXY+</data>
+      </textobject>
+      <textobject id="103" name="Datacenter 数据中心区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMDMiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTAzIiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDo1NzBweDt0b3A6MzEwcHg7d2lkdGg6MTAxMHB4O2hlaWdodDo5MDBweDt6LWluZGV4OjA7cG9pbnRlci1ldmVudHM6bm9uZTsiPjxzdmcgd2lkdGg9IjEwMTAiIGhlaWdodD0iOTAwIj48cmVjdCB4PSIyIiB5PSIyIiByeD0iMTYiIHdpZHRoPSIxMDA2IiBoZWlnaHQ9Ijg5NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzI5NmIwIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="104" name="Datacenter 数据中心" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEwNCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEwNCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6NTkwcHg7dG9wOjMyOHB4O3dpZHRoOjk3MHB4O3otaW5kZXg6MTAwMTtmb250LWZhbWlseTpBcmlhbDsiIGNvbnRlbnRlZGl0YWJsZT0idHJ1ZSI+PGRpdiBzdHlsZT0iZm9udC1zaXplOjI0cHg7Zm9udC13ZWlnaHQ6Ym9sZDtjb2xvcjojMjQ1Njc5OyI+RGF0YWNlbnRlciDmlbDmja7kuK3lv4M8L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTRweDtjb2xvcjojNTY2NTc1O21hcmdpbi10b3A6NnB4OyI+QVMgNjUwMDIgwrcgMTAuMi4wLjAvMTY8L2Rpdj48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="105" name="IaaS 云侧区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMDUiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTA1IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDoxNzYwcHg7dG9wOjMxMHB4O3dpZHRoOjQ4MHB4O2hlaWdodDo5MDBweDt6LWluZGV4OjA7cG9pbnRlci1ldmVudHM6bm9uZTsiPjxzdmcgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI5MDAiPjxyZWN0IHg9IjIiIHk9IjIiIHJ4PSIxNiIgd2lkdGg9IjQ3NiIgaGVpZ2h0PSI4OTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcyOTZiMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+PC9kaXY+</data>
+      </textobject>
+      <textobject id="106" name="IaaS 云侧" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEwNiIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEwNiIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTc4MHB4O3RvcDozMjhweDt3aWR0aDo0NDBweDt6LWluZGV4OjEwMDE7Zm9udC1mYW1pbHk6QXJpYWw7IiBjb250ZW50ZWRpdGFibGU9InRydWUiPjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OmJvbGQ7Y29sb3I6IzI0NTY3OTsiPklhYVMg5LqR5L6nPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjE0cHg7Y29sb3I6IzU2NjU3NTttYXJnaW4tdG9wOjZweDsiPkFTIDY1MDAzIMK3IDEwLjMuMC4wLzE2PC9kaXY+PC9kaXY+</data>
+      </textobject>
+      <textobject id="107" name="Internet SP 互联网区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMDciIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTA3IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDoxMDAwcHg7dG9wOjM1cHg7d2lkdGg6NDgwcHg7aGVpZ2h0OjIyMHB4O3otaW5kZXg6MDtwb2ludGVyLWV2ZW50czpub25lOyI+PHN2ZyB3aWR0aD0iNDgwIiBoZWlnaHQ9IjIyMCI+PHJlY3QgeD0iMiIgeT0iMiIgcng9IjE2IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjIxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzI5NmIwIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="108" name="Internet SP 互联网" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEwOCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEwOCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTAyMHB4O3RvcDo1M3B4O3dpZHRoOjQ0MHB4O3otaW5kZXg6MTAwMTtmb250LWZhbWlseTpBcmlhbDsiIGNvbnRlbnRlZGl0YWJsZT0idHJ1ZSI+PGRpdiBzdHlsZT0iZm9udC1zaXplOjI0cHg7Zm9udC13ZWlnaHQ6Ym9sZDtjb2xvcjojMjQ1Njc5OyI+SW50ZXJuZXQgU1Ag5LqS6IGU572RPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjE0cHg7Y29sb3I6IzU2NjU3NTttYXJnaW4tdG9wOjZweDsiPkFTIDE5OTk5IMK3IDguOC44Ljg8L2Rpdj48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="109" name="Global SP #2 运营商二区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMDkiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTA5IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDo3MHB4O3RvcDoxMjgwcHg7d2lkdGg6NDgwcHg7aGVpZ2h0OjQ5MHB4O3otaW5kZXg6MDtwb2ludGVyLWV2ZW50czpub25lOyI+PHN2ZyB3aWR0aD0iNDgwIiBoZWlnaHQ9IjQ5MCI+PHJlY3QgeD0iMiIgeT0iMiIgcng9IjE2IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ4NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzI5NmIwIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="110" name="Global SP #2 运营商二" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDExMCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjExMCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6OTBweDt0b3A6MTI5OHB4O3dpZHRoOjQ0MHB4O3otaW5kZXg6MTAwMTtmb250LWZhbWlseTpBcmlhbDsiIGNvbnRlbnRlZGl0YWJsZT0idHJ1ZSI+PGRpdiBzdHlsZT0iZm9udC1zaXplOjI0cHg7Zm9udC13ZWlnaHQ6Ym9sZDtjb2xvcjojMjQ1Njc5OyI+R2xvYmFsIFNQICMyIOi/kOiQpeWVhuS6jDwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxNHB4O2NvbG9yOiM1NjY1NzU7bWFyZ2luLXRvcDo2cHg7Ij5BUyAxMDAwMTwvZGl2PjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="111" name="Global SP #1 运营商一区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMTEiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTExIiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDo3MTBweDt0b3A6MTI4MHB4O3dpZHRoOjk3MHB4O2hlaWdodDo0OTBweDt6LWluZGV4OjA7cG9pbnRlci1ldmVudHM6bm9uZTsiPjxzdmcgd2lkdGg9Ijk3MCIgaGVpZ2h0PSI0OTAiPjxyZWN0IHg9IjIiIHk9IjIiIHJ4PSIxNiIgd2lkdGg9Ijk2NiIgaGVpZ2h0PSI0ODYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcyOTZiMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+PC9kaXY+</data>
+      </textobject>
+      <textobject id="112" name="Global SP #1 运营商一" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDExMiIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjExMiIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6NzMwcHg7dG9wOjEyOThweDt3aWR0aDo5MzBweDt6LWluZGV4OjEwMDE7Zm9udC1mYW1pbHk6QXJpYWw7IiBjb250ZW50ZWRpdGFibGU9InRydWUiPjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OmJvbGQ7Y29sb3I6IzI0NTY3OTsiPkdsb2JhbCBTUCAjMSDov5DokKXllYbkuIA8L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTRweDtjb2xvcjojNTY2NTc1O21hcmdpbi10b3A6NnB4OyI+QVMgMTAwMDAgwrcgTVBMUyAvIEJHUDwvZGl2PjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="113" name="Branch #1 分支一区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMTMiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTEzIiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDo3MHB4O3RvcDoxODYwcHg7d2lkdGg6NDgwcHg7aGVpZ2h0Ojc0MHB4O3otaW5kZXg6MDtwb2ludGVyLWV2ZW50czpub25lOyI+PHN2ZyB3aWR0aD0iNDgwIiBoZWlnaHQ9Ijc0MCI+PHJlY3QgeD0iMiIgeT0iMiIgcng9IjE2IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjczNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzI5NmIwIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="114" name="Branch #1 分支一" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDExNCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjExNCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6OTBweDt0b3A6MTg3OHB4O3dpZHRoOjQ0MHB4O3otaW5kZXg6MTAwMTtmb250LWZhbWlseTpBcmlhbDsiIGNvbnRlbnRlZGl0YWJsZT0idHJ1ZSI+PGRpdiBzdHlsZT0iZm9udC1zaXplOjI0cHg7Zm9udC13ZWlnaHQ6Ym9sZDtjb2xvcjojMjQ1Njc5OyI+QnJhbmNoICMxIOWIhuaUr+S4gDwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxNHB4O2NvbG9yOiM1NjY1NzU7bWFyZ2luLXRvcDo2cHg7Ij5BUyA2NTAwNCDCtyAxMC40LjAuMC8xNjwvZGl2PjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="115" name="Branch #2 分支二区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMTUiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTE1IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDo1ODBweDt0b3A6MTg2MHB4O3dpZHRoOjQ4MHB4O2hlaWdodDo3NDBweDt6LWluZGV4OjA7cG9pbnRlci1ldmVudHM6bm9uZTsiPjxzdmcgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI3NDAiPjxyZWN0IHg9IjIiIHk9IjIiIHJ4PSIxNiIgd2lkdGg9IjQ3NiIgaGVpZ2h0PSI3MzYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcyOTZiMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+PC9kaXY+</data>
+      </textobject>
+      <textobject id="116" name="Branch #2 分支二" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDExNiIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjExNiIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6NjAwcHg7dG9wOjE4NzhweDt3aWR0aDo0NDBweDt6LWluZGV4OjEwMDE7Zm9udC1mYW1pbHk6QXJpYWw7IiBjb250ZW50ZWRpdGFibGU9InRydWUiPjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OmJvbGQ7Y29sb3I6IzI0NTY3OTsiPkJyYW5jaCAjMiDliIbmlK/kuow8L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTRweDtjb2xvcjojNTY2NTc1O21hcmdpbi10b3A6NnB4OyI+QVMgNjUwMDUgwrcgMTAuNS4wLjAvMTY8L2Rpdj48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="117" name="Branch #3 分支三区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMTciIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTE3IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDoxMDkwcHg7dG9wOjE4NjBweDt3aWR0aDo0ODBweDtoZWlnaHQ6NzQwcHg7ei1pbmRleDowO3BvaW50ZXItZXZlbnRzOm5vbmU7Ij48c3ZnIHdpZHRoPSI0ODAiIGhlaWdodD0iNzQwIj48cmVjdCB4PSIyIiB5PSIyIiByeD0iMTYiIHdpZHRoPSI0NzYiIGhlaWdodD0iNzM2IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mjk2YjAiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="118" name="Branch #3 分支三" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDExOCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjExOCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTExMHB4O3RvcDoxODc4cHg7d2lkdGg6NDQwcHg7ei1pbmRleDoxMDAxO2ZvbnQtZmFtaWx5OkFyaWFsOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj48ZGl2IHN0eWxlPSJmb250LXNpemU6MjRweDtmb250LXdlaWdodDpib2xkO2NvbG9yOiMyNDU2Nzk7Ij5CcmFuY2ggIzMg5YiG5pSv5LiJPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjE0cHg7Y29sb3I6IzU2NjU3NTttYXJnaW4tdG9wOjZweDsiPkFTIDY1MDA2IMK3IDEwLjYuMC4wLzE2PC9kaXY+PC9kaXY+</data>
+      </textobject>
+      <textobject id="119" name="Branch #4 分支四区域" type="square">
+        <data>PGRpdiBpZD0iY3VzdG9tU2hhcGUxMTkiIGNsYXNzPSJjdXN0b21TaGFwZSBjb250ZXh0LW1lbnUiIGRhdGEtcGF0aD0iMTE5IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7bGVmdDoxNjcwcHg7dG9wOjE4NjBweDt3aWR0aDo1NzBweDtoZWlnaHQ6NzQwcHg7ei1pbmRleDowO3BvaW50ZXItZXZlbnRzOm5vbmU7Ij48c3ZnIHdpZHRoPSI1NzAiIGhlaWdodD0iNzQwIj48cmVjdCB4PSIyIiB5PSIyIiByeD0iMTYiIHdpZHRoPSI1NjYiIGhlaWdodD0iNzM2IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mjk2YjAiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="120" name="Branch #4 分支四" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEyMCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEyMCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTY5MHB4O3RvcDoxODc4cHg7d2lkdGg6NTMwcHg7ei1pbmRleDoxMDAxO2ZvbnQtZmFtaWx5OkFyaWFsOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj48ZGl2IHN0eWxlPSJmb250LXNpemU6MjRweDtmb250LXdlaWdodDpib2xkO2NvbG9yOiMyNDU2Nzk7Ij5CcmFuY2ggIzQg5YiG5pSv5ZubPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjE0cHg7Y29sb3I6IzU2NjU3NTttYXJnaW4tdG9wOjZweDsiPkFTIDY1MDA3IMK3IDEwLjcuMC4wLzE2PC9kaXY+PC9kaXY+</data>
+      </textobject>
+      <textobject id="123" name="Management 管理" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEyMyIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEyMyIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MjI4MHB4O3RvcDo1NXB4O3dpZHRoOjQwMHB4O3otaW5kZXg6MTAwMTtmb250LWZhbWlseTpBcmlhbDsiIGNvbnRlbnRlZGl0YWJsZT0idHJ1ZSI+PGRpdiBzdHlsZT0iZm9udC1zaXplOjI0cHg7Zm9udC13ZWlnaHQ6Ym9sZDtjb2xvcjojMjQ1Njc5OyI+TWFuYWdlbWVudCDnrqHnkIY8L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTRweDtjb2xvcjojNTY2NTc1O21hcmdpbi10b3A6NnB4OyI+cG5ldDAgwrcgMTkyLjE2OC4xLjE5PC9kaXY+PC9kaXY+</data>
+      </textobject>
+      <textobject id="124" name="" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEyNCIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEyNCIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTgxMHB4O3RvcDo4NTBweDt3aWR0aDozODBweDt6LWluZGV4OjEwMDE7Zm9udC1mYW1pbHk6QXJpYWw7IiBjb250ZW50ZWRpdGFibGU9InRydWUiPjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OmJvbGQ7Y29sb3I6IzI0NTY3OTsiPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxNHB4O2NvbG9yOiM1NjY1NzU7bWFyZ2luLXRvcDo2cHg7Ij5yMzAg6Lev55Sx5LiO5LqR5L6n5qih5oufIMK3IENTUiDov5Dnu7TmianlsZU8L2Rpdj48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="125" name="" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEyNSIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEyNSIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTAwcHg7dG9wOjIzMTBweDt3aWR0aDo0MDBweDt6LWluZGV4OjEwMDE7Zm9udC1mYW1pbHk6QXJpYWw7IiBjb250ZW50ZWRpdGFibGU9InRydWUiPjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OmJvbGQ7Y29sb3I6IzI0NTY3OTsiPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxNHB4O2NvbG9yOiM1NjY1NzU7bWFyZ2luLXRvcDo2cHg7Ij5FbXBsb3llZXMgVlBOMjAwIMK3IEd1ZXN0IFZQTjE5OTwvZGl2PjwvZGl2Pg==</data>
+      </textobject>
+      <textobject id="126" name="" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEyNiIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEyNiIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6NjEwcHg7dG9wOjI1MjBweDt3aWR0aDo0MDBweDt6LWluZGV4OjEwMDE7Zm9udC1mYW1pbHk6QXJpYWw7IiBjb250ZW50ZWRpdGFibGU9InRydWUiPjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OmJvbGQ7Y29sb3I6IzI0NTY3OTsiPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxNHB4O2NvbG9yOiM1NjY1NzU7bWFyZ2luLXRvcDo2cHg7Ij7lj4wgRWRnZSDCtyBFbXBsb3llZXMgVlJSUCDnvZHlhbM8L2Rpdj48L2Rpdj4=</data>
+      </textobject>
+      <textobject id="127" name="" type="text">
+        <data>PGRpdiBpZD0iY3VzdG9tVGV4dDEyNyIgY2xhc3M9ImN1c3RvbVNoYXBlIGN1c3RvbVRleHQgY29udGV4dC1tZW51IGVkaXRhYmxlIiBkYXRhLXBhdGg9IjEyNyIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO2xlZnQ6MTgxMHB4O3RvcDoxMjkwcHg7d2lkdGg6NDEwcHg7ei1pbmRleDoxMDAxO2ZvbnQtZmFtaWx5OkFyaWFsOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj48ZGl2IHN0eWxlPSJmb250LXNpemU6MjRweDtmb250LXdlaWdodDpib2xkO2NvbG9yOiMyNDU2Nzk7Ij48L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTRweDtjb2xvcjojNTY2NTc1O21hcmdpbi10b3A6NnB4OyI+5YiG5Yy65oyJ6K++56iL5Y6f5Zu+77yb56uv5Y+j5oyJ5a6e6ZmF5pig5bCE44CCPGJyPuWIhuaUryBXQU4g57uPIFNQMiDCtyDmma7pgJogTEFOIOaOpeWFpeOAgjwvZGl2PjwvZGl2Pg==</data>
+      </textobject>
+    </textobjects>
+    <pictures /><configs /></objects>
+  </lab>
